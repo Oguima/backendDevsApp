@@ -5,6 +5,7 @@
 
 const express = require('express'); 
 const mongoose = require('mongoose');
+const cors = require('cors');
 const routes = require('./routes');
 
 const app = express();
@@ -23,11 +24,15 @@ mongoose.connect('mongodb+srv://rgsguima:rgsguima@omnistack-kts1s.mongodb.net/we
     useUnifiedTopology: true
 });
 
+app.use(cors({ origin: 'http://localhost:3000'})) //App Web na porta 3000...
 app.use(express.json()); //entende Json ... importante tem que estar antes das rotas...
 app.use(routes); //passa a usar as rotas definidas..
 
 //escolhendo a porta... localhost:3333
 app.listen(3333);
+
+//obs: para acesso a porta, tem que instar o cors... yarn add cors
+
 
 
 
