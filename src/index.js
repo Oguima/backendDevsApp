@@ -6,7 +6,10 @@
 const express = require('express'); 
 const mongoose = require('mongoose');
 const cors = require('cors');
+//soket io... precisa criar um servidor...
+const http = require ('http'); //utilizado pelo express, para ouvir requisicoes...
 const routes = require('./routes');
+const { setupWebsocket } = require('./websocket');
 
 const app = express();
 
@@ -30,8 +33,14 @@ app.use(cors());
 app.use(express.json()); //entende Json ... importante tem que estar antes das rotas...
 app.use(routes); //passa a usar as rotas definidas..
 
+//Servidor fora do express...
+const server = http.Server(app);
+setupWebsocket(server);
+
+
 //escolhendo a porta... localhost:3333
-app.listen(3333);
+//app.listen(3333);
+server.listen(3333);
 
 //obs: para acesso a porta, tem que instar o cors... yarn add cors
 
