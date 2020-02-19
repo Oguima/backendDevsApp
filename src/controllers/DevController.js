@@ -1,7 +1,7 @@
 const axios = require('axios');
 const Dev = require('../models/Dev');
 const parseStringAsArray = require('../utils/parseStringAsArray');
-
+const { findConnections, sendMessage } = require('../websocket');
 //por padrão o controller tem 5 funcoes...: pode ser 
 //index, - lista 
 //show, - um único
@@ -108,10 +108,20 @@ module.exports = {
             bio,
             techs: techsArray,
             location,
-        })
+        });
+
+        //filtrar as conexões: precisa estar a 10km de distancia.
+        //e que o novo dev possua ao menos uma das tecnologias filtradas...
+        const sendSocketMessageTo = findConnections(
+            { latitude, longitude} ,
+            techsArray,
+        )
+
+        //console.log(sendSocketMessageTo);
+        sendMessage(sendSocketMessageTo, 'new-dev' , dev );
 
         //Todas informaçOes:
-        console.log(name, avatar_url, bio, github_username);
+        //console.log(name, avatar_url, bio, github_username);
     }
     
     //Para monitorar as alterações do arquivo, tem que instalar...:

@@ -103,4 +103,7 @@ Editora:
 latitude: -25.4481276
 longitude: -49.2942842
 
+Pegando um ponto proximo...
+-25.4472952 -49.2980683
+
 No mongoDb, primeiro ele lê a longitude, depois a latitude...
